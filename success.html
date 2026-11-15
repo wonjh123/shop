@@ -67,7 +67,14 @@
       $('#icon').textContent = '✓';
       $('#title').textContent = '주문이 완료되었어요';
       $('#sub').textContent = '결제가 정상적으로 승인되었습니다.';
-      const items = data.lines.map((l) => `${esc(l.name)} (${esc(l.color)} / ${esc(l.size)}) × ${l.qty}`).join('<br>');
+      let lines = null;
+      try {
+        const saved = JSON.parse(sessionStorage.getItem('daywear.lastOrder'));
+        if (saved && saved.orderId === data.orderId) lines = saved.lines;
+      } catch { /* ignore */ }
+      const items = lines
+        ? lines.map((l) => `${esc(l.name)} (${esc(l.color)} / ${esc(l.size)}) × ${l.qty}`).join('<br>')
+        : esc(data.orderName);
       $('#receipt').innerHTML = `
         <dt>주문번호</dt><dd>${esc(data.orderId)}</dd>
         <dt>주문 상품</dt><dd>${items}</dd>
@@ -81,7 +88,7 @@
       }
       $('#actions').hidden = false;
     } catch (e) {
-      fail('서버에 연결할 수 없습니다. node server.js 가 실행 중인지 확인해 주세요.');
+      fail('서버에 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.');
     }
   })();
 </script>

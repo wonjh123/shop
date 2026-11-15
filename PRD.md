@@ -178,8 +178,8 @@
 |---|---|
 | PG | 토스페이먼츠 **결제위젯 SDK v2** (`https://js.tosspayments.com/v2/standard`) |
 | 키 | 문서용 공개 테스트 키 기본 사용. 환경변수 `TOSS_CLIENT_KEY`, `TOSS_SECRET_KEY`로 교체 가능 |
-| 서버 | `server.js` — Node 18+ 내장 모듈만 사용 (npm 설치 없음). 정적 파일 + API 제공 |
-| 실행 | `node server.js` → `http://localhost:3000` (`file://`로 열면 결제 페이지에 안내 표시) |
+| 서버 | 배포: Vercel 서버리스 함수 `api/config.js`·`api/orders.js`·`api/confirm.js` / 로컬: `server.js`. 둘 다 `api/_payments.js` 공통 로직 사용, npm 설치 없음 |
+| 실행 | 배포: `git push` → Vercel 자동 배포 / 로컬: `node server.js` → `http://localhost:3000` |
 | 데이터 | 상품 데이터를 `data.js`로 분리해 브라우저와 서버가 공유 |
 
 ### 9.2 결제 흐름
@@ -206,7 +206,9 @@
 - 결제 금액은 **서버가 `data.js` 가격으로 계산**한다. 클라이언트가 보낸 금액은 승인 전 비교용으로만 쓴다.
 - 금액이 다르면 승인하지 않는다 (`AMOUNT_MISMATCH`).
 - 시크릿 키는 서버에만 있다. `server.js`, `PRD.md`는 정적 파일로 제공하지 않는다.
-- 같은 주문의 재승인(새로고침)은 저장된 결과를 반환하고, 다른 결제로 이미 완료된 주문은 거절한다.
+- 서버리스라 주문을 저장하지 않는다. 대신 `orderId`에 **주문번호+금액 HMAC 서명**을 넣어 승인 시 금액 위변조를 검증한다 (서명 불일치 → `AMOUNT_MISMATCH`, 1시간 경과 → `ORDER_EXPIRED`).
+- 새로고침 등 같은 결제의 재승인 요청은 `Idempotency-Key: confirm-{paymentKey}`로 토스가 첫 응답을 그대로 반환한다.
+- 완료 화면의 상품 목록은 결제 직전 `sessionStorage`에 보관한 값을 표시만 한다 (금액·승인 여부는 서버 응답 기준).
 
 ### F4. 주문/결제 페이지 — 수용 기준
 - [ ] 장바구니 `주문하기` → 주문 상품 목록, 상품 금액, 배송비(무료), 최종 금액이 보인다.

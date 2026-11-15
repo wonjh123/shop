@@ -80,6 +80,9 @@ async function main() {
 
   payBtn.addEventListener('click', async () => {
     payBtn.disabled = true;
+    // 서버는 주문을 저장하지 않으므로, 완료 화면에 보여줄 상품 목록을 브라우저에 잠시 보관한다.
+    // (금액·승인 여부는 서버/토스 응답만 신뢰)
+    try { sessionStorage.setItem('daywear.lastOrder', JSON.stringify({ orderId: order.orderId, lines: order.lines })); } catch { /* ignore */ }
     try {
       await widgets.requestPayment({
         orderId: order.orderId,
