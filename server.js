@@ -22,7 +22,7 @@ const MIME = {
   '.svg': 'image/svg+xml',
 };
 // 공개하지 않을 파일·폴더 (배포 시 .vercelignore 와 같은 기준)
-const DENY_FILES = new Set(['server.js', 'PRD.md', 'seo.config.json']);
+const DENY_FILES = new Set(['server.js', 'PRD.md', 'CLAUDE.md', 'seo.config.json']);
 const DENY_DIRS = ['api/', 'scripts/', 'node_modules/'];
 
 function sendJSON(res, status, body) {

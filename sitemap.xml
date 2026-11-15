@@ -7,6 +7,12 @@
     <image:image><image:loc>https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&amp;fit=crop&amp;w=1200&amp;h=630&amp;q=80</image:loc></image:image>
   </url>
   <url>
+    <loc>https://shop-five-alpha-24.vercel.app/faq.html</loc>
+    <lastmod>2026-11-15</lastmod>
+    <priority>0.6</priority>
+    <image:image><image:loc>https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&amp;fit=crop&amp;w=1200&amp;h=630&amp;q=80</image:loc></image:image>
+  </url>
+  <url>
     <loc>https://shop-five-alpha-24.vercel.app/products/essential-crewneck-tshirt.html</loc>
     <lastmod>2026-11-15</lastmod>
     <priority>0.8</priority>

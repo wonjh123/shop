@@ -73,33 +73,81 @@ const SHIPPING = {
   shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'KR' },
 };
 
-// FAQ — 화면(FAQ 섹션)과 FAQPage JSON-LD가 같은 내용을 쓴다. 사실과 다른 내용을 넣지 말 것.
+// FAQ — 메인 FAQ 섹션(home: true 만), faq.html, FAQPage JSON-LD(faq.html), llms.txt 가 같은 내용을 쓴다.
+// 사실과 다른 내용(교환·환불 정책, 배송 기간 등 정해지지 않은 것)을 넣지 말 것.
+const FAQ_GROUPS = ['상품', '주문', '결제', '배송'];
 const FAQ = [
   {
+    group: '상품', home: true,
     q: 'DAYWEAR에서는 어떤 옷을 파나요?',
     a: `남녀공용 데일리 캐주얼 의류를 판매합니다. 상의, 하의, 아우터, 액세서리 4개 카테고리에 총 ${PRODUCTS.length}개 상품이 있습니다.`,
   },
   {
+    group: '상품', home: true,
     q: '가격대는 어느 정도인가요?',
     a: `${won(MIN_PRICE)}부터 ${won(MAX_PRICE)}까지입니다. 티셔츠·비니는 19,000원, 데님은 59,000~65,000원, 아우터는 89,000~229,000원입니다.`,
   },
   {
+    group: '배송', home: true,
     q: '배송비가 있나요?',
     a: '전 상품 무료배송입니다.',
   },
   {
+    group: '상품', home: true,
     q: '사이즈는 어떻게 되나요?',
     a: '의류(상의·하의·아우터)는 S, M, L, XL 네 가지 사이즈, 액세서리는 FREE 사이즈입니다. 모든 상품은 남녀공용입니다.',
   },
   {
+    group: '결제', home: true,
     q: '어떤 결제 수단을 쓸 수 있나요?',
     a: '토스페이먼츠 결제창을 통해 신용·체크카드, 계좌이체, 토스페이 등 간편결제로 결제할 수 있습니다.',
   },
   {
+    group: '주문', home: true,
     q: '한 번에 몇 개까지 주문할 수 있나요?',
     a: '상품·색상·사이즈 조합별로 최대 10개까지 장바구니에 담아 주문할 수 있습니다.',
   },
+  {
+    group: '상품',
+    q: '상품 상세 정보는 어디서 볼 수 있나요?',
+    a: '상품 카드를 누르면 상세 창에서 설명·색상·사이즈를 확인하고 바로 담을 수 있습니다. 상품마다 별도 상세 페이지도 있어 상품번호, 색상, 사이즈, 가격을 한눈에 볼 수 있습니다.',
+  },
+  {
+    group: '주문',
+    q: '회원가입을 해야 주문할 수 있나요?',
+    a: '아니요. 회원가입이나 로그인 없이 장바구니에 담고 바로 주문할 수 있습니다.',
+  },
+  {
+    group: '주문',
+    q: '장바구니에 담은 상품은 계속 남아 있나요?',
+    a: '장바구니는 사용 중인 브라우저에 저장되어 새로고침하거나 다시 방문해도 유지됩니다. 다른 기기나 다른 브라우저에서는 보이지 않습니다.',
+  },
+  {
+    group: '주문',
+    q: '주문 내역은 어디서 확인하나요?',
+    a: '결제가 끝나면 주문 완료 화면에 주문번호, 주문 상품, 결제수단, 결제 금액이 표시됩니다. 별도의 주문 내역 조회 기능은 없으니 완료 화면의 주문번호를 확인해 두세요.',
+  },
+  {
+    group: '결제',
+    q: '실제로 돈이 결제되나요?',
+    a: '현재 DAYWEAR는 토스페이먼츠 테스트 결제 환경으로 운영됩니다. 결제 과정은 그대로 진행되지만 실제로 돈이 빠져나가지 않습니다.',
+  },
+  {
+    group: '결제',
+    q: '결제 도중 창을 닫거나 결제에 실패하면 어떻게 되나요?',
+    a: '장바구니는 그대로 유지됩니다. 장바구니에서 다시 주문하기를 눌러 결제를 진행하면 됩니다.',
+  },
+  {
+    group: '결제',
+    q: '주문서를 열어 두고 나중에 결제해도 되나요?',
+    a: '주문서는 만든 뒤 1시간 동안 유효합니다. 1시간이 지나면 결제가 승인되지 않으니 장바구니에서 다시 주문해 주세요.',
+  },
 ];
+const HOME_FAQ = FAQ.filter((f) => f.home);
+const faqItemsHTML = (list, indent = '    ') => list.map((f) => `${indent}<details class="faq-item">
+${indent}  <summary>${esc(f.q)}</summary>
+${indent}  <p>${esc(f.a)}</p>
+${indent}</details>`).join('\n');
 
 /* ---------- 카드 (script.js renderGrid 와 같은 마크업) ---------- */
 function cardHTML(p, base = '') {
@@ -148,19 +196,11 @@ ${jsonLd({
         '@type': 'ListItem', position: i + 1, url: productUrl(p), name: p.name,
       })),
     },
-    {
-      '@type': 'FAQPage',
-      mainEntity: FAQ.map((f) => ({
-        '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a },
-      })),
-    },
   ],
 })}`.replace(/\n{2,}/g, '\n');
 
-  const faq = FAQ.map((f) => `    <details class="faq-item">
-      <summary>${esc(f.q)}</summary>
-      <p>${esc(f.a)}</p>
-    </details>`).join('\n');
+  // FAQPage 구조화 데이터는 중복을 피해 faq.html 에만 둔다.
+  const faq = faqItemsHTML(HOME_FAQ);
 
   const footer = Object.entries(CATEGORY_LABEL).map(([key, label]) => `    <div class="footer-col">
       <p class="footer-title">${label}</p>
@@ -300,9 +340,96 @@ function buildProducts() {
   for (const p of PRODUCTS) fs.writeFileSync(path.join(dir, `${p.slug}.html`), productPage(p));
 }
 
+/* ---------- faq.html ---------- */
+const FAQ_URL = `${SITE}/faq.html`;
+
+function buildFaqPage() {
+  const title = `자주 묻는 질문 — 배송·사이즈·주문·결제 안내 | ${cfg.siteName}`;
+  const description = `${cfg.siteName} 자주 묻는 질문. 전 상품 무료배송, 의류 S~XL·액세서리 FREE 사이즈, 조합별 최대 10개 주문, 토스페이먼츠 결제 안내.`;
+  const ld = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'FAQPage',
+        '@id': `${FAQ_URL}#faq`,
+        url: FAQ_URL,
+        inLanguage: 'ko-KR',
+        mainEntity: FAQ.map((f) => ({
+          '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: cfg.siteName, item: `${SITE}/` },
+          { '@type': 'ListItem', position: 2, name: '자주 묻는 질문', item: FAQ_URL },
+        ],
+      },
+      ORGANIZATION,
+    ],
+  };
+
+  const nav = FAQ_GROUPS.map((g, i) => `<a href="#faq-${i + 1}">${g}</a>`).join('\n      ');
+  const sections = FAQ_GROUPS.map((g, i) => `  <section class="faq-group" id="faq-${i + 1}" aria-labelledby="faqGroup${i + 1}">
+    <h2 id="faqGroup${i + 1}">${g}</h2>
+${faqItemsHTML(FAQ.filter((f) => f.group === g))}
+  </section>`).join('\n\n');
+
+  const html = `<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- scripts/build-seo.js 가 생성한 파일입니다. 직접 수정하지 말고 build-seo.js 의 FAQ 를 고친 뒤 다시 생성하세요. -->
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(description)}">
+<link rel="canonical" href="${FAQ_URL}">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+${socialMeta({ title, description, url: FAQ_URL, image: cfg.ogImage })}
+${jsonLd(ld)}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="./" class="logo">${esc(cfg.siteName)}</a>
+    <a href="./" class="step">← 전체 상품</a>
+  </div>
+</header>
+
+<main class="container faq-page">
+  <nav class="breadcrumb" aria-label="경로">
+    <a href="./">${esc(cfg.siteName)}</a> › <span aria-current="page">자주 묻는 질문</span>
+  </nav>
+
+  <h1>자주 묻는 질문</h1>
+  <p class="faq-lead">상품, 주문, 결제, 배송에 대해 자주 묻는 질문을 모았습니다. 질문을 누르면 답변이 열립니다.</p>
+
+  <nav class="faq-nav" aria-label="질문 분류">
+      ${nav}
+  </nav>
+
+${sections}
+
+  <div class="faq-cta">
+    <a class="add-btn" href="./">상품 둘러보기</a>
+  </div>
+</main>
+
+</body>
+</html>
+`;
+  fs.writeFileSync(path.join(ROOT, 'faq.html'), html);
+}
+
 /* ---------- sitemap / robots / llms ---------- */
 function buildSitemap() {
   const urls = [{ loc: `${SITE}/`, priority: '1.0', image: cfg.ogImage }]
+    .concat({ loc: FAQ_URL, priority: '0.6', image: cfg.ogImage })
     .concat(PRODUCTS.map((p) => ({ loc: productUrl(p), priority: '0.8', image: p.image, title: p.name })));
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
@@ -367,6 +494,8 @@ ${sections}
 
 ## 자주 묻는 질문
 
+전체 질문: ${FAQ_URL}
+
 ${FAQ.map((f) => `- **${f.q}** ${f.a}`).join('\n')}
 `;
   fs.writeFileSync(path.join(ROOT, 'llms.txt'), txt);
@@ -374,6 +503,7 @@ ${FAQ.map((f) => `- **${f.q}** ${f.a}`).join('\n')}
 
 buildIndex();
 buildProducts();
+buildFaqPage();
 buildSitemap();
 buildRobots();
 buildLlms();
