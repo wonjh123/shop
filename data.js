@@ -42,6 +42,21 @@ const PRODUCTS = [
     colors: ['골드', '실버'], sizes: FREE, desc: '얇은 메탈 프레임의 라운드 선글라스. UV400 차단.' },
 ];
 
+// 상품 상세 페이지 주소: /products/<slug>.html  (scripts/build-seo.js 가 생성)
+const SLUGS = {
+  1: 'essential-crewneck-tshirt', 2: 'original-graphic-tshirt', 3: 'chambray-dot-shirt', 4: 'heavyweight-hoodie',
+  5: 'straight-denim-pants', 6: 'low-rise-wide-denim', 7: 'cutoff-denim-shorts', 8: 'cotton-chino-jogger',
+  9: 'leather-rider-jacket', 10: 'nylon-bomber-jacket', 11: 'cotton-field-jacket', 12: 'wool-belted-coat',
+  13: 'mesh-trucker-cap', 14: 'daily-backpack', 15: 'rib-knit-beanie', 16: 'round-metal-sunglasses',
+};
+PRODUCTS.forEach((p) => { p.slug = SLUGS[p.id]; });
+
+const CATEGORY_LABEL = { top: '상의', bottom: '하의', outer: '아우터', acc: '액세서리' };
+const COLOR_HEX = {
+  화이트: '#ffffff', 블랙: '#1a1a1a', 그레이: '#9a9a9a', 베이지: '#d8c8ad', 네이비: '#1f2a44',
+  인디고: '#2f4467', 라이트블루: '#a9c3de', 차콜: '#3d3d3d', 카키: '#7a7350', 브라운: '#7b5136',
+  카멜: '#b8875a', 오렌지: '#c8673a', 핑크: '#e7b9b6', 실버: '#c7c7c7', 골드: '#c9a45c',
+};
 const CART_KEY = 'daywear.cart';
 
-if (typeof module !== 'undefined') module.exports = { PRODUCTS, CART_KEY };
+if (typeof module !== 'undefined') module.exports = { PRODUCTS, CART_KEY, CATEGORY_LABEL, COLOR_HEX };

@@ -6,12 +6,6 @@ const CATEGORIES = [
   { key: 'acc', label: '액세서리' },
 ];
 
-const COLOR_HEX = {
-  화이트: '#ffffff', 블랙: '#1a1a1a', 그레이: '#9a9a9a', 베이지: '#d8c8ad', 네이비: '#1f2a44',
-  인디고: '#2f4467', 라이트블루: '#a9c3de', 차콜: '#3d3d3d', 카키: '#7a7350', 브라운: '#7b5136',
-  카멜: '#b8875a', 오렌지: '#c8673a', 핑크: '#e7b9b6', 실버: '#c7c7c7', 골드: '#c9a45c',
-};
-
 const MAX_QTY = 10;
 
 const $ = (sel) => document.querySelector(sel);
@@ -64,13 +58,16 @@ function renderGrid() {
   const list = state.category === 'all' ? PRODUCTS : PRODUCTS.filter((p) => p.category === state.category);
   $('#listTitle').textContent = catLabel(state.category);
   $('#listCount').textContent = `${list.length}개 상품`;
+  // 카드 마크업은 scripts/build-seo.js 의 cardHTML 과 동일하게 유지 (크롤러용 사전 렌더링)
   $('#grid').innerHTML = list.map((p) => `
     <li class="card" data-id="${p.id}">
-      <div class="card-img">${imgTag(p)}</div>
-      <p class="card-cat">${catLabel(p.category)}</p>
-      <p class="card-name">${p.name}</p>
-      <p class="card-price">${won(p.price)}</p>
-      <div class="swatches">${p.colors.map((c) => `<span class="swatch" title="${c}" style="background:${COLOR_HEX[c]}"></span>`).join('')}</div>
+      <a class="card-link" href="products/${p.slug}.html">
+        <div class="card-img">${imgTag(p)}</div>
+        <p class="card-cat">${catLabel(p.category)}</p>
+        <h3 class="card-name">${p.name}</h3>
+        <p class="card-price">${won(p.price)}</p>
+        <div class="swatches">${p.colors.map((c) => `<span class="swatch" title="${c}" style="background:${COLOR_HEX[c]}"></span>`).join('')}</div>
+      </a>
     </li>`).join('');
 }
 
@@ -84,7 +81,11 @@ $('#tabs').addEventListener('click', (e) => {
 
 $('#grid').addEventListener('click', (e) => {
   const card = e.target.closest('.card');
-  if (card) openModal(Number(card.dataset.id));
+  if (!card) return;
+  // 일반 클릭은 모달, 새 탭 열기(⌘/Ctrl/가운데 클릭)는 상품 상세 페이지로
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+  e.preventDefault();
+  openModal(Number(card.dataset.id));
 });
 
 /* ---------- overlay / panel helpers ---------- */
@@ -258,4 +259,10 @@ $('#cartBtn').addEventListener('click', openDrawer);
 /* ---------- init ---------- */
 renderTabs();
 renderGrid();
+// 상품 상세 페이지의 "옵션 선택하기" → /#product-3 형태로 들어오면 모달을 연다
+const deepLink = location.hash.match(/^#product-(\d+)$/);
+if (deepLink && findProduct(Number(deepLink[1]))) {
+  openModal(Number(deepLink[1]));
+  history.replaceState(null, '', location.pathname + location.search);
+}
 renderCart();

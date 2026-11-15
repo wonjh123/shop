@@ -1,0 +1,48 @@
+# DAYWEAR
+
+> 티셔츠, 데님, 재킷, 코트, 모자·가방까지. 매일 입기 좋은 남녀공용 캐주얼 의류 16가지를 19,000원부터 만나보세요. 전 상품 무료배송.
+
+- 브랜드: DAYWEAR (남녀공용 데일리 캐주얼 의류 온라인 쇼핑몰)
+- 상품 수: 16개 (상의·하의·아우터·액세서리 각 4개)
+- 가격대: 19,000원 ~ 229,000원 (KRW)
+- 배송: 전 상품 무료배송
+- 사이즈: 의류 S·M·L·XL, 액세서리 FREE
+- 결제: 토스페이먼츠 (카드, 계좌이체, 간편결제)
+- 최종 갱신: 2026-11-15
+
+## 상의
+
+- [에센셜 크루넥 티셔츠](https://shop-five-alpha-24.vercel.app/products/essential-crewneck-tshirt.html): 19,000원. 20수 코튼으로 탄탄하게 짠 기본 반팔 티셔츠. 세탁 후에도 목이 늘어나지 않습니다. 색상 화이트·블랙·그레이, 사이즈 S·M·L·XL.
+- [오리지널 그래픽 티셔츠](https://shop-five-alpha-24.vercel.app/products/original-graphic-tshirt.html): 29,000원. 빈티지 무드의 프린트가 들어간 세미 오버핏 티셔츠. 색상 베이지·화이트, 사이즈 S·M·L·XL.
+- [샴브레이 도트 셔츠](https://shop-five-alpha-24.vercel.app/products/chambray-dot-shirt.html): 45,000원. 잔잔한 도트 패턴의 샴브레이 셔츠. 단독으로도, 아우터처럼도 입기 좋습니다. 색상 인디고·라이트블루, 사이즈 S·M·L·XL.
+- [헤비웨이트 후드 스웨트셔츠](https://shop-five-alpha-24.vercel.app/products/heavyweight-hoodie.html): 59,000원. 도톰한 기모 안감의 후드. 넉넉한 실루엣으로 레이어드하기 좋습니다. 색상 그레이·블랙·네이비, 사이즈 S·M·L·XL.
+
+## 하의
+
+- [스트레이트 데님 팬츠](https://shop-five-alpha-24.vercel.app/products/straight-denim-pants.html): 59,000원. 허리부터 밑단까지 일자로 떨어지는 클래식 핏 데님. 색상 인디고·블랙, 사이즈 S·M·L·XL.
+- [로우라이즈 와이드 데님](https://shop-five-alpha-24.vercel.app/products/low-rise-wide-denim.html): 65,000원. 여유 있는 와이드 핏에 원워싱으로 깔끔한 데님. 색상 인디고·차콜, 사이즈 S·M·L·XL.
+- [컷오프 데님 쇼츠](https://shop-five-alpha-24.vercel.app/products/cutoff-denim-shorts.html): 39,000원. 디스트로이드 디테일과 롤업 밑단의 여름 데님 쇼츠. 색상 라이트블루, 사이즈 S·M·L·XL.
+- [코튼 치노 조거](https://shop-five-alpha-24.vercel.app/products/cotton-chino-jogger.html): 49,000원. 밴딩 허리와 시보리 밑단으로 편안한 치노 조거 팬츠. 색상 베이지·카키·블랙, 사이즈 S·M·L·XL.
+
+## 아우터
+
+- [레더 라이더 재킷](https://shop-five-alpha-24.vercel.app/products/leather-rider-jacket.html): 189,000원. 부드러운 비건 레더로 만든 클래식 라이더 재킷. 색상 블랙, 사이즈 S·M·L·XL.
+- [나일론 봄버 재킷](https://shop-five-alpha-24.vercel.app/products/nylon-bomber-jacket.html): 89,000원. 가벼운 나일론 소재의 MA-1 스타일 봄버. 색상 오렌지·블랙·카키, 사이즈 S·M·L·XL.
+- [코튼 필드 재킷](https://shop-five-alpha-24.vercel.app/products/cotton-field-jacket.html): 119,000원. 4포켓 디테일의 워크웨어 필드 재킷. 간절기 필수 아이템. 색상 카키·베이지, 사이즈 S·M·L·XL.
+- [울 블렌드 벨티드 코트](https://shop-five-alpha-24.vercel.app/products/wool-belted-coat.html): 229,000원. 허리 벨트로 실루엣을 조절할 수 있는 롱 코트. 색상 카멜·차콜, 사이즈 S·M·L·XL.
+
+## 액세서리
+
+- [메쉬 트러커 볼캡](https://shop-five-alpha-24.vercel.app/products/mesh-trucker-cap.html): 25,000원. 통기성 좋은 메쉬 백 트러커 캡. 사이즈 조절 가능. 색상 화이트·블랙, 사이즈 FREE.
+- [데일리 백팩](https://shop-five-alpha-24.vercel.app/products/daily-backpack.html): 69,000원. 15인치 노트북 수납이 가능한 생활 방수 백팩. 색상 네이비·블랙, 사이즈 FREE.
+- [립 니트 비니](https://shop-five-alpha-24.vercel.app/products/rib-knit-beanie.html): 19,000원. 골지 조직으로 쫀쫀하게 짠 기본 비니. 색상 차콜·핑크·블랙, 사이즈 FREE.
+- [라운드 메탈 선글라스](https://shop-five-alpha-24.vercel.app/products/round-metal-sunglasses.html): 49,000원. 얇은 메탈 프레임의 라운드 선글라스. UV400 차단. 색상 골드·실버, 사이즈 FREE.
+
+## 자주 묻는 질문
+
+- **DAYWEAR에서는 어떤 옷을 파나요?** 남녀공용 데일리 캐주얼 의류를 판매합니다. 상의, 하의, 아우터, 액세서리 4개 카테고리에 총 16개 상품이 있습니다.
+- **가격대는 어느 정도인가요?** 19,000원부터 229,000원까지입니다. 티셔츠·비니는 19,000원, 데님은 59,000~65,000원, 아우터는 89,000~229,000원입니다.
+- **배송비가 있나요?** 전 상품 무료배송입니다.
+- **사이즈는 어떻게 되나요?** 의류(상의·하의·아우터)는 S, M, L, XL 네 가지 사이즈, 액세서리는 FREE 사이즈입니다. 모든 상품은 남녀공용입니다.
+- **어떤 결제 수단을 쓸 수 있나요?** 토스페이먼츠 결제창을 통해 신용·체크카드, 계좌이체, 토스페이 등 간편결제로 결제할 수 있습니다.
+- **한 번에 몇 개까지 주문할 수 있나요?** 상품·색상·사이즈 조합별로 최대 10개까지 장바구니에 담아 주문할 수 있습니다.

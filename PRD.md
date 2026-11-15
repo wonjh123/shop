@@ -215,3 +215,25 @@
 - [ ] 테스트 결제 성공 시 주문 완료 화면(주문번호·상품·결제수단·금액)이 보이고 장바구니가 비워진다.
 - [ ] 결제창을 닫거나 실패하면 장바구니가 유지되고 다시 결제할 수 있다.
 - [ ] 금액을 조작한 승인 요청은 서버에서 거절된다.
+
+---
+
+## 10. v0.3 변경 사항 — SEO · AEO · GEO
+
+| 영역 | 적용 내용 |
+|---|---|
+| 단일 소스 | `data.js`(상품) + `seo.config.json`(사이트 URL·문구·인증 코드) → `node scripts/build-seo.js` 로 산출물 생성 |
+| 크롤러용 HTML | 상품 그리드·FAQ·푸터 링크를 `index.html`에 사전 렌더링 (JS 없이도 내용·링크가 보임) |
+| 상품 상세 페이지 | `products/<slug>.html` 16개. 고유 title/description/canonical, 답변형 요약 문장, 상품 정보 표, 같은 카테고리 상품 링크 |
+| 구조화 데이터 | 메인: OnlineStore · WebSite · ItemList · FAQPage / 상품: Product(Offer·무료배송) · BreadcrumbList |
+| 메타 | canonical, robots, Open Graph, Twitter Card, favicon, 서치 콘솔·네이버 인증 메타 슬롯 |
+| 크롤링 제어 | `robots.txt`(검색·AI 크롤러 허용, `/api/`만 차단), `sitemap.xml`(이미지 포함 17개 URL), 결제 페이지 `noindex` |
+| AEO | FAQ 섹션(화면 + FAQPage), "DAYWEAR는 어떤 쇼핑몰인가요?" 소개, 상품별 질문-답변형 요약 |
+| GEO | `llms.txt`(사이트·전 상품·FAQ 마크다운 요약), AI 크롤러(GPTBot, OAI-SearchBot, PerplexityBot, ClaudeBot, Google-Extended 등) 명시 허용 |
+| 배포 제외 | `.vercelignore` — `server.js`, `PRD.md`, `scripts/`, `seo.config.json` |
+
+**수용 기준**
+- [ ] JS를 끈 상태에서도 메인에 상품 16개와 상품 페이지 링크, FAQ 6개가 보인다.
+- [ ] 모든 페이지에 `<h1>`이 하나, canonical이 하나 있다.
+- [ ] 구글 리치 결과 테스트에서 Product·FAQPage·BreadcrumbList 오류가 없다.
+- [ ] 메인에서 카드 클릭 시 기존처럼 모달이 열리고, 상품 페이지의 `담기` 버튼은 `/#product-ID`로 이동해 모달을 연다.

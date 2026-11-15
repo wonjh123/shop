@@ -27,7 +27,7 @@ const MIME = {
   '.jpg': 'image/jpeg',
   '.svg': 'image/svg+xml',
 };
-const PUBLIC_DENY = new Set(['server.js', 'PRD.md']);
+const PUBLIC_DENY = new Set(['server.js', 'PRD.md', 'seo.config.json', 'build-seo.js']);
 
 function sendJSON(res, status, body) {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8' });
