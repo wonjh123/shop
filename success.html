@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>주문 완료 — DAYWEAR</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">DAYWEAR</a>
+    <p class="step">장바구니 › 주문/결제 › <b>완료</b></p>
+  </div>
+</header>
+
+<main class="container result-page">
+  <div class="result-card" id="card">
+    <p class="result-icon" id="icon">…</p>
+    <h1 id="title">결제를 확인하고 있어요</h1>
+    <p class="result-sub" id="sub">잠시만 기다려 주세요. 창을 닫지 마세요.</p>
+    <dl class="receipt" id="receipt" hidden></dl>
+    <div class="result-actions" id="actions" hidden>
+      <a class="add-btn" href="index.html">쇼핑 계속하기</a>
+    </div>
+  </div>
+</main>
+
+<script src="data.js"></script>
+<script>
+  const $ = (s) => document.querySelector(s);
+  const won = (n) => Number(n).toLocaleString('ko-KR') + '원';
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  function fail(message, code) {
+    $('#icon').textContent = '!';
+    $('#icon').classList.add('err');
+    $('#title').textContent = '결제를 완료하지 못했어요';
+    $('#sub').textContent = message + (code ? ` (${code})` : '');
+    $('#actions').innerHTML = '<a class="add-btn" href="checkout.html">다시 결제하기</a>';
+    $('#actions').hidden = false;
+  }
+
+  (async () => {
+    const q = new URLSearchParams(location.search);
+    const paymentKey = q.get('paymentKey');
+    const orderId = q.get('orderId');
+    const amount = Number(q.get('amount'));
+    if (!paymentKey || !orderId || !amount) return fail('결제 정보가 올바르지 않습니다.');
+
+    try {
+      // 결제 승인은 반드시 서버에서 시크릿 키로 요청한다.
+      const r = await fetch('/api/confirm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ paymentKey, orderId, amount }),
+      });
+      const data = await r.json();
+      if (!r.ok) return fail(data.message || '결제 승인에 실패했습니다.', data.code);
+
+      try { localStorage.removeItem(CART_KEY); } catch { /* ignore */ }
+
+      $('#icon').textContent = '✓';
+      $('#title').textContent = '주문이 완료되었어요';
+      $('#sub').textContent = '결제가 정상적으로 승인되었습니다.';
+      const items = data.lines.map((l) => `${esc(l.name)} (${esc(l.color)} / ${esc(l.size)}) × ${l.qty}`).join('<br>');
+      $('#receipt').innerHTML = `
+        <dt>주문번호</dt><dd>${esc(data.orderId)}</dd>
+        <dt>주문 상품</dt><dd>${items}</dd>
+        <dt>결제 수단</dt><dd>${esc(data.method || '-')}</dd>
+        <dt>결제 일시</dt><dd>${new Date(data.approvedAt).toLocaleString('ko-KR')}</dd>
+        <dt>결제 금액</dt><dd class="strong">${won(data.totalAmount)}</dd>`;
+      $('#receipt').hidden = false;
+      if (data.receiptUrl) {
+        $('#actions').insertAdjacentHTML('afterbegin',
+          `<a class="ghost-btn" href="${esc(data.receiptUrl)}" target="_blank" rel="noopener">영수증 보기</a>`);
+      }
+      $('#actions').hidden = false;
+    } catch (e) {
+      fail('서버에 연결할 수 없습니다. node server.js 가 실행 중인지 확인해 주세요.');
+    }
+  })();
+</script>
+</body>
+</html>

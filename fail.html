@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>결제 실패 — DAYWEAR</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">DAYWEAR</a>
+    <p class="step">장바구니 › <b>주문/결제</b> › 완료</p>
+  </div>
+</header>
+
+<main class="container result-page">
+  <div class="result-card">
+    <p class="result-icon err">!</p>
+    <h1>결제가 완료되지 않았어요</h1>
+    <p class="result-sub" id="sub">결제 중 문제가 발생했습니다.</p>
+    <p class="result-code" id="code"></p>
+    <div class="result-actions">
+      <a class="ghost-btn" href="index.html">장바구니로</a>
+      <a class="add-btn" href="checkout.html">다시 결제하기</a>
+    </div>
+  </div>
+</main>
+
+<script>
+  // 장바구니는 그대로 유지된다 (결제 성공 시에만 비움).
+  const q = new URLSearchParams(location.search);
+  if (q.get('message')) document.getElementById('sub').textContent = q.get('message');
+  if (q.get('code')) document.getElementById('code').textContent = `오류 코드: ${q.get('code')}`;
+</script>
+</body>
+</html>
